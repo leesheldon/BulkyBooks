@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyBooks.Data
+namespace BulkyBooks.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
