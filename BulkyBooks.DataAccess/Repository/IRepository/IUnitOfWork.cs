@@ -10,5 +10,6 @@ namespace BulkyBooks.DataAccess.Repository.IRepository
 
         IStoredProc_Call StoredProc_Call { get; }
 
+        void Save();
     }
 }
