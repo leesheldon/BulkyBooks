@@ -50,7 +50,7 @@ namespace BulkyBooks.Areas.Admin.Controllers
             {
                 if(category.Id == 0)
                 {
-                    _unitOfWork.Category.Add(category);                    
+                    _unitOfWork.Category.Add(category);
                 }
                 else
                 {
