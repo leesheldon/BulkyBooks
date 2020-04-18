@@ -10,6 +10,8 @@ namespace BulkyBooks.DataAccess.Repository.IRepository
 
         ICoverTypeRepository CoverType { get; }
 
+        IProductRepository Product { get; }
+
         IStoredProc_Call StoredProc_Call { get; }
 
         void Save();
