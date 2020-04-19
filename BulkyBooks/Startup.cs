@@ -41,6 +41,12 @@ namespace BulkyBooks
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.LoginPath = $"/Identity/Account/Login";
+                opt.LogoutPath = $"/Identity/Account/Logout";
+                opt.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
