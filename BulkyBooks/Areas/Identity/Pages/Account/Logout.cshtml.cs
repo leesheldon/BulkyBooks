@@ -35,6 +35,7 @@ namespace BulkyBooks.Areas.Identity.Pages.Account
 
             // Set Shopping cart session once user logged out            
             HttpContext.Session.SetInt32(SD.ssShoppingCart, 0);
+            HttpContext.Session.Remove(SD.ssShoppingCart);
             // End
 
             if (returnUrl != null)
