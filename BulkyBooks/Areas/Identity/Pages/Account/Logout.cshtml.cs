@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BulkyBooks.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -30,6 +32,11 @@ namespace BulkyBooks.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+
+            // Set Shopping cart session once user logged out            
+            HttpContext.Session.SetInt32(SD.ssShoppingCart, 0);
+            // End
+
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

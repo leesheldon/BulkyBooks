@@ -47,6 +47,13 @@ namespace BulkyBooks
                 opt.LogoutPath = $"/Identity/Account/Logout";
                 opt.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(30);
+                opt.Cookie.HttpOnly = true;
+                opt.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +74,7 @@ namespace BulkyBooks
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
