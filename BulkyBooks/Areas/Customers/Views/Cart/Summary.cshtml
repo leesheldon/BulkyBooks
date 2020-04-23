@@ -30,7 +30,7 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="OrderHeader.Name" type="text" class="form-control" />
+                                        <input asp-for="OrderHeader.Name" type="text" class="form-control" id="orderName" />
                                         <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" />
+                                        <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control" id="phoneNumber" />
                                         <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                                         <label>Street Address</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" />
+                                        <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control" id="streetAddress" />
                                         <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                             }
 
                             @if (Model.OrderHeader.ApplicationUser.Company == null ||
-                        !Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
+                                !Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
                             {
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                         data-key="@Stripe.Value.PublishableKey"
@@ -133,7 +133,7 @@
                                     document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                                 </script>
 
-                                <button type="submit" value="Place Order" class="btn btn-success form-control">Place Order</button>
+                                <button type="submit" value="Place Order" class="btn btn-success form-control" onclick="return validateInput()">Place Order</button>
                             }
                             else
                             {
@@ -148,5 +148,35 @@
 </form>
 
 @section Scripts {
+    
+
+    <script>
+        function validateInput() {
+            var orderName = document.getElementById("orderName").value;
+            var phone = document.getElementById("phoneNumber").value;
+            var street = document.getElementById("streetAddress").value;
+            if (orderName.toString() == '') {
+                swal("Error", "Please enter Order Name!", "error");
+                return false;
+            }
+            else {
+                if (phone.toString() == '') {
+                    swal("Error", "Please enter Phone Number!", "error");
+                    return false;
+                }
+                else {
+                    if (street.toString() == '') {
+                        swal("Error", "Please enter Street Address!", "error");
+                        return false;
+                    }
+                    else {
+                        return true;
+                    }
+                }
+            }
+        }
+
+    </script>
+
     <partial name="_ValidationScriptsPartial" />
 }

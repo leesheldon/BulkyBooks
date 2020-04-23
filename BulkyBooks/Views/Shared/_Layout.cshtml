@@ -58,11 +58,24 @@
                             </li>
                         }
 
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">
+                                @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
+                                {
+                                    <span>Manage Orders</span>
+                                }
+                                else
+                                {
+                                    <span>Orders History</span>
+                                }
+                            </a>
+                        </li>
+
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart) != null)
                         {
                             <li style="color:white;">
                                 <a asp-area="Customers" asp-controller="Cart" asp-action="Index" class="nav-link">
-                                    @{ 
+                                    @{
                                         var count = HttpContextAccessor.HttpContext.Session.GetInt32(SD.ssShoppingCart);
                                     }
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (@count)
@@ -72,7 +85,7 @@
                         else
                         {
                             <li style="color:white;">
-                                <a href="#" class="nav-link">                                    
+                                <a href="#" class="nav-link">
                                     <i class="fas fa-shopping-cart"></i> &nbsp; (0)
                                 </a>
                             </li>

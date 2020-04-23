@@ -206,8 +206,7 @@ namespace BulkyBooks.Areas.Customers.Controllers
             }
 
             // Add new Order Details into Database
-            cartVM.ListCart = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == claim.Value, includeProperties: "Product");
-            List<OrderDetails> detailsList = new List<OrderDetails>();
+            cartVM.ListCart = _unitOfWork.ShoppingCart.GetAll(i => i.ApplicationUserId == claim.Value, includeProperties: "Product");            
             foreach (var item in cartVM.ListCart)
             {
                 item.Price = SD.GetPriceBasedOnQuantity(item.Count, item.Product.Price, item.Product.Price50, item.Product.Price100);
@@ -250,13 +249,13 @@ namespace BulkyBooks.Areas.Customers.Controllers
                 var service = new ChargeService();
                 Charge charge = service.Create(options);
 
-                if (charge.BalanceTransactionId == null)
+                if (charge.Id == null)
                 {
                     cartVM.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
                 }
                 else
                 {
-                    cartVM.OrderHeader.TransactionId = charge.BalanceTransactionId;
+                    cartVM.OrderHeader.TransactionId = charge.Id;
                 }
 
                 if (charge.Status.ToLower() == "succeeded")
