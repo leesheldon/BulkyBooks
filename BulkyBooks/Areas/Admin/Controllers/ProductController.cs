@@ -32,12 +32,15 @@ namespace BulkyBooks.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult InsertOrUpdate(int? id)
+        public async Task<IActionResult> InsertOrUpdate(int? id)
         {
+            IEnumerable<Category> catList = await _unitOfWork.Category.GetAll_Async();
+
             ProductVM vm = new ProductVM()
             {
                 Product = new Product(),
-                CategoryList=_unitOfWork.Category.GetAll().Select(i => new SelectListItem { 
+                CategoryList = catList.Select(i => new SelectListItem
+                {
                     Text = i.Name,
                     Value = i.Id.ToString()
                 }),
@@ -66,7 +69,7 @@ namespace BulkyBooks.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult InsertOrUpdate(ProductVM vm)
+        public async Task<IActionResult> InsertOrUpdate(ProductVM vm)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +120,9 @@ namespace BulkyBooks.Areas.Admin.Controllers
             }
 
             // State of data validation is False
-            vm.CategoryList = _unitOfWork.Category.GetAll().Select(i => new SelectListItem
+            IEnumerable<Category> catList = await _unitOfWork.Category.GetAll_Async();
+
+            vm.CategoryList = catList.Select(i => new SelectListItem
             {
                 Text = i.Name,
                 Value = i.Id.ToString()

@@ -26,7 +26,7 @@ namespace BulkyBooks.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult InsertOrUpdate(int? id)
+        public async Task<IActionResult> InsertOrUpdate(int? id)
         {
             Category category = new Category();
             if (id == null)
@@ -36,7 +36,7 @@ namespace BulkyBooks.Areas.Admin.Controllers
             }
 
             // Update Category
-            category = _unitOfWork.Category.Get(id.GetValueOrDefault());
+            category = await _unitOfWork.Category.Get_Async(id.GetValueOrDefault());
             if (category == null)
             {
                 return NotFound();
@@ -47,13 +47,13 @@ namespace BulkyBooks.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult InsertOrUpdate(Category category)
+        public async Task<IActionResult> InsertOrUpdate(Category category)
         {
             if (ModelState.IsValid)
             {
                 if(category.Id == 0)
                 {
-                    _unitOfWork.Category.Add(category);
+                    await _unitOfWork.Category.Add_Async(category);
                 }
                 else
                 {
@@ -69,22 +69,22 @@ namespace BulkyBooks.Areas.Admin.Controllers
 
         #region API CALLS
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var allCat = _unitOfWork.Category.GetAll();
+            var allCat = await _unitOfWork.Category.GetAll_Async();
             return Json(new { data = allCat });
         }
 
         [HttpDelete]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var catFromDb = _unitOfWork.Category.Get(id);
+            var catFromDb = await _unitOfWork.Category.Get_Async(id);
             if (catFromDb == null)
             {
                 return Json(new { success = false, message = "Error in deleting Category!" });
             }
 
-            _unitOfWork.Category.Remove(catFromDb);
+            await _unitOfWork.Category.Remove_Async(catFromDb);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Delete Category successful!" });
         }

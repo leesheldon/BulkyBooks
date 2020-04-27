@@ -1,0 +1,10 @@
+﻿@model BulkyBooks.Models.ApplicationUser
+
+@if (Model != null)
+{
+    @Html.Raw("Hi! " + @Model.Name) <i class="fas fa-user"></i>
+}
+else
+{
+    @Html.Raw("Hi! Null") <i class="fas fa-user"></i>
+}

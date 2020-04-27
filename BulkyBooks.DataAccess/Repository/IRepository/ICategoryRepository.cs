@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BulkyBooks.DataAccess.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ICategoryRepository : IRepositoryAsync<Category>
     {
         void Update(Category category);
 
